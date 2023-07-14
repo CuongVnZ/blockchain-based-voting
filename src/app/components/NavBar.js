@@ -1,4 +1,23 @@
+'use client';
+
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Link from 'next/link'
+
+import Web3 from "web3";
+import {
+  tokenContractInstance,
+  votingContractInstance,
+} from "@/service/service";
+
+import { setUser, setUserBalance } from "@/redux/authSlice";
+import { setInstance, setTokenContract, setVotingContract } from "@/redux/web3Slice";
+
 export default function NavBar() {
+  const dispatch = useDispatch();
+
+  const user = useSelector(state=>state.user)
+
   const handleConnectWallet = async () => {
     if (
       typeof window !== "undefined" &&
@@ -9,14 +28,13 @@ export default function NavBar() {
           method: "eth_requestAccounts",
         });
         const web3Instance = new Web3(window.ethereum);
-        setWeb3(web3Instance);
         const accounts = await web3Instance.eth.getAccounts();
-        setAddress(accounts[0]);
 
         const tokenContractInst = tokenContractInstance(web3Instance);
-        setTokenContract(tokenContractInst);
-        const votingContractInst = votingContractInstance(web3Instance);
-        setVotingContract(votingContractInst);
+        const balance = await tokenContractInst.methods.balanceOf(accounts[0]).call();
+
+        dispatch(setUser(accounts[0]));
+        dispatch(setUserBalance(web3Instance.utils.fromWei(balance, "ether")));
       } catch (error) {
         console.log(error);
       }
@@ -26,31 +44,36 @@ export default function NavBar() {
   };
 
   return (
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <a class="navbar-item" href="https://bulma.io">
-          <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28" />
-        </a>
-
-        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
+    <>
+    <nav className="navbar">
+      <div className="container">
+      <div className="navbar-brand">
+        <div className="navbar-item">
+          <h1>Blockchain-Based Voting</h1>
+        </div>
       </div>
 
-      <div id="navbarBasicExample" class="navbar-menu">
-        <div class="navbar-start">
-          <a class="navbar-item">Home</a>
-          <a class="navbar-item">Documentation</a>
+      <div className="navbar-menu" id="nav-links">
+        <div className="navbar-start">
+          <Link href="/" className="navbar-item">Home</Link>
+          <Link href="/create" className="navbar-item">Create Poll</Link>
+          <Link href="/deposit" className="navbar-item">Deposit</Link>
         </div>
 
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <button className="button is-primary " onClick={handleConnectWallet}>Connect Wallet</button>
+        <div className="navbar-end">
+          <div className="navbar-item">
+            {!user.address && (<button className="button is-primary" onClick={handleConnectWallet}>Connect Wallet</button>)}
+            {user.address && (<p>{user.address}</p>)}
           </div>
         </div>
       </div>
+      </div>
     </nav>
+    <section className="container">
+      <div className="mt-2">
+        <p>Your balance: {user.balance} COM (Community Token)</p>
+      </div>
+    </section>
+    </>
   )
 }
