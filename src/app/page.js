@@ -1,14 +1,9 @@
 'use client'
 
-import Image from 'next/image'
-import styles from './page.module.css'
-import "bulma/css/bulma.css";
-
 import { useEffect, useState } from "react";
 
 import Web3 from "web3";
 import {
-  tokenContractInstance,
   votingContractInstance,
 } from "../service/service";
 
