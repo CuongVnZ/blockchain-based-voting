@@ -72,7 +72,7 @@ export default function Home() {
           <div className=" controle mt-2">
             <input onChange={updateAmountDeposit} className=" input" type=" type" placeholder=" Enter a number..."/>
           </div>
-          <button onClick={handleDeposit} className=" button is-primary mt-2" > Deposit </button>
+          <button onClick={handleDeposit} className=" button is-primary mt-2">Deposit</button>
         </div>
       </section>
       
