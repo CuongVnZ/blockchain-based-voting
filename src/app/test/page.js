@@ -1,10 +1,13 @@
 'use client'
 
 import { Container, Row, Col, Card, ListGroup } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 
 import NavBar from '@/app/components/NavBar';
 
 export default function Test() {
+
+  const user = useSelector(state=>state.user)
 
   const polls = [
     { id: 1, question: 'What is your favorite color?' },
