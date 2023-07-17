@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 const Proposal = ({ id, votingContract, address, web3 }) => {
   const [proposalInfo, setProposalInfo] = useState(null);
   const [resultProposal, setResult] = useState(0);
-  const [proposalDate, setProposalDate] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -49,14 +48,14 @@ const Proposal = ({ id, votingContract, address, web3 }) => {
               <div className="content">
                 <p>{proposalInfo.description}</p>
                 <br />
-                <p>{new Date(Number(proposalInfo.timestamp)).toLocaleDateString()}</p>
+                <p>{new Date(Number(proposalInfo.timestamp)*1000).toLocaleDateString()}</p>
               </div>
             </div>
             <footer className="card-footer">
               {proposalInfo.timestamp > Math.floor(new Date().getTime() / 1000) ? (
                 <>
                   <button onClick={() => handleVote(true)} className="card-footer-item button is-primary mt-3 mr-5" >
-                    Agree: {Number(web3.utils.fromWei(proposalInfo.yesCount, "ether"))}
+                    Agree: {Number(proposalInfo.yesCount)}
                   </button>
                   <button onClick={() => handleVote(false)} className="card-footer-item button is-primary mt-3">
                     Disagree: {Number(web3.utils.fromWei(proposalInfo.noCount, "ether"))}
