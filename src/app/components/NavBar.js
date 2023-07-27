@@ -11,7 +11,6 @@ import {
 } from "@/service/service";
 
 import { setUser, setUserBalance } from "@/redux/authSlice";
-import { setInstance, setTokenContract, setVotingContract } from "@/redux/web3Slice";
 
 export default function NavBar() {
   const dispatch = useDispatch();
