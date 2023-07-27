@@ -44,7 +44,7 @@ contract VotingContract {
     }
 
     function createProposal(string memory _description) public {
-        votingToken.transferFrom(msg.sender, address(this), 20 * 10 ** 18);
+        votingToken.transferFrom(msg.sender, address(this), 50 * 10 ** 18);
         Proposal memory proposal = Proposal(
             _description,
             0,
@@ -61,12 +61,10 @@ contract VotingContract {
         bool isApproved
     ) public checkProposalEnded(proposalId) {
         require(!hasVoted[msg.sender][proposalId], "Already voted");
-        // uint256 totalToken = votingToken.balanceOf(msg.sender);
+        votingToken.transferFrom(msg.sender, address(this), 20 * 10 ** 18);
         if (isApproved) {
-            // proposals[proposalId].yesCount += totalToken;
             proposals[proposalId].yesCount += 1;
         } else {
-            // proposals[proposalId].noCount += totalToken;
             proposals[proposalId].noCount += 1;
         }
         hasVoted[msg.sender][proposalId] = true;
@@ -80,9 +78,6 @@ contract VotingContract {
         );
         uint256 yesCount = proposals[proposalId].yesCount;
         uint256 noCount = proposals[proposalId].noCount;
-
-        // uint256 totalSupply = votingToken.totalSupply();
-        // uint256 totalYesVote = (yesCount / totalSupply) * 100;
         if (yesCount > noCount) {
             resultProposal[proposalId] = 1;
         } else {
