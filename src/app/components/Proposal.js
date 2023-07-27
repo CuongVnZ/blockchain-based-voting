@@ -6,23 +6,30 @@ const Proposal = ({ id, votingContract, address, web3 }) => {
 
   useEffect(() => {
     async function fetchData() {
+      console.log("🚀 ~ file: Proposal.js:9 ~ fetchData ~ id", id)
       const proposal = await votingContract.methods.proposals(id).call();
-      console.log("🚀 ~ file: Proposal.js:9 ~ fetchData ~ proposal:", proposal);
+      // console.log("🚀 ~ file: Proposal.js:9 ~ fetchData ~ proposal:", proposal);
       setProposalInfo(proposal);
 
       const result = await votingContract.methods.resultProposal(id).call();
-      console.log("🚀 ~ file: Proposal.js:9 ~ fetchData ~ result:", result)
+      // console.log("🚀 ~ file: Proposal.js:9 ~ fetchData ~ result:", result)
       setResult(result);
     }
 
     const interval = setInterval(() => {
       fetchData();
-    }, 2000);
+    }, 3000);
 
     return () => clearInterval(interval);
   });
 
   async function handleVote(value) {
+    const allowance = await tokenContract.methods.allowance(address, votingContract._address).call();
+    if (Number(web3.utils.fromWei(allowance, "ether")) < 20) {
+      await tokenContract.methods.approve(votingContract._address, BigInt(20 * 10 ** 18)).send({
+        from: address,
+      });
+    }
     await votingContract.methods.castVote(id, value).send({
       from: address,
     });

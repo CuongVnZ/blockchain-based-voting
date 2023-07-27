@@ -37,7 +37,7 @@ export default function Home() {
         setVotingContract(votingContractInst);
 
       } catch (error) {
-        // console.log(error);
+        console.log(error);
         setErrorMessage(error.message);
       }
     } else {
@@ -52,19 +52,19 @@ export default function Home() {
 
     if (votingContract) {
       const proposalCount = await votingContract.methods.proposalCount().call();
-      console.log( "🚀 ~ file: index.js:116 ~ fetchData ~ proposalCount:", proposalCount);
+      console.log( "🚀 ~ file: index.js:55 ~ fetchData ~ proposalCount:", proposalCount);
       setCount(Number(proposalCount));
     }
   }
 
   useEffect(() => {
-    fetchData();
+    // fetchData();
 
-    // const interval = setInterval(() => {
-    //   fetchData();
-    // }, 2000);
+    const interval = setInterval(() => {
+      fetchData();
+    }, 3000);
 
-    // return () => clearInterval(interval);
+    return () => clearInterval(interval);
   });
 
   return user.address ? (
