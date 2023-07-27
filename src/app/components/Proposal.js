@@ -39,7 +39,7 @@ const Proposal = ({ id, votingContract, address, web3 }) => {
   }
 
   function getDate() {
-    return new Date(Number(proposalInfo.timestamp)*1000).toLocaleDateString();
+    return new Date(Number(proposalInfo.timestamp)*1000).toLocaleString();
   }
 
   return (
@@ -51,21 +51,22 @@ const Proposal = ({ id, votingContract, address, web3 }) => {
               <p className="card-header-title">{id + 1}. {getDate()}</p>
             </header>
             <div className="card-content">
-              <div className="content">
+              <div className="content is-flex is-flex-direction-column">
                 <p>{proposalInfo.description}</p>
-                <hr />
-                <div className="is-flex-direction-row is-justify-content-space-between">
+                <hr/>
+                {/* <hr /> */}
+                <div className="is-align-self-center">
                 {!isEnded() ? (
                 <>
-                  <button onClick={() => handleVote(true)} className="button is-success">
-                    Agree: {Number(proposalInfo.yesCount)}
+                  <button onClick={() => handleVote(true)} className="button is-success mx-1">
+                    Agreed: {Number(proposalInfo.yesCount)}
                   </button>
-                  <button onClick={() => handleVote(false)} className="button is-danger">
-                    Disagree: {Number(proposalInfo.noCount)}
+                  <button onClick={() => handleVote(false)} className="button is-danger mx-1">
+                    Disagreed: {Number(proposalInfo.noCount)}
                   </button>
                 </>
                 ) : (
-                  <button onClick={handleFinalize} className="button is-info" disabled={isEnded()}>
+                  <button onClick={handleFinalize} className="button is-info" disabled={resultProposal != 0}>
                     Finialize
                   </button>
                 )}
@@ -73,7 +74,11 @@ const Proposal = ({ id, votingContract, address, web3 }) => {
               </div>
             </div>
             {isEnded() ? (
-              resultProposal == 1 ? (
+              resultProposal == 0 ? (
+                <footer className="card-footer has-background-warning-light">
+                  <p className="card-footer-item"> In progressing </p>
+                </footer>
+              ) : resultProposal == 1 ? (
                 <footer className="card-footer has-background-success-light">
                   <p className="card-footer-item has-text-success"> Proposal accepted </p>
                 </footer>
