@@ -63,7 +63,8 @@ export default function NavBar() {
         <div className="navbar-end">
           <div className="navbar-item">
             {!user.address && (<button className="button is-link" onClick={handleConnectWallet}>Connect Wallet</button>)}
-            {user.address && (<p>{user.address}</p>)}
+            {/* {user.address && (<p>{user.address}</p>)} */}
+            {user.address && (<p>{user.address.slice(0,5)}...{user.address.slice(-4)}</p>)}
           </div>
         </div>
       </div>
