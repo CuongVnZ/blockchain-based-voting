@@ -11,6 +11,6 @@ export const tokenContractInstance = (web3) => {
 export const votingContractInstance = web3 => {
     return new web3.eth.Contract(
         VotingContract, // abi of SC governance contract
-        "0x9e8f80F68930A8982F165d4B4001811F08253093"  // address of governance contract
+        "0xCD4320770EA4BcbDC8dD78FFEBa0e9Ac5154BA10"  // address of governance contract
     )
 }

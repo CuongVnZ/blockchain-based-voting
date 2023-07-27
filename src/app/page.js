@@ -73,7 +73,7 @@ export default function Home() {
     <main className="container">
       <section className="my-5">
         <p className="is-size-1 has-text-centered">VOTING LIST ({countProposal})</p>
-        <p className="has-text-centered my-5">(Voting require 20 COM)</p>
+        <p className="has-text-centered mb-5">(Voting require 20 COM)</p>
         <div className="columns is-multiline">
           {countProposal > 0 &&
             Array.from({ length: countProposal }, (_, index) => {

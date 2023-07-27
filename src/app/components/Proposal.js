@@ -48,13 +48,12 @@ const Proposal = ({ id, votingContract, address, web3 }) => {
         <div className="column is-3">
           <div className="card ">
             <header className="card-header has-background-light">
-              <p className="card-header-title">{id + 1}. {getDate()}</p>
+              <p className="card-header-title">[#{id + 1}] {getDate()}</p>
             </header>
             <div className="card-content">
               <div className="content is-flex is-flex-direction-column">
                 <p>{proposalInfo.description}</p>
                 <hr/>
-                {/* <hr /> */}
                 <div className="is-align-self-center">
                 {!isEnded() ? (
                 <>

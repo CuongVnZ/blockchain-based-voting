@@ -37,10 +37,7 @@ export default function Home() {
         setTokenContract(tokenContractInst);
         const votingContractInst = votingContractInstance(web3Instance);
         setVotingContract(votingContractInst);
-
-        const balance = await tokenContractInst.methods.balanceOf(accounts[0]).call();
-        // console.log(balance)
-        setBalance(web3Instance.utils.fromWei(balance, "ether"));
+        
       } catch (error) {
         console.log(error);
       }
