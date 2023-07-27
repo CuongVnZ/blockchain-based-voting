@@ -70,9 +70,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if(user.address) {
-      handleConnectWallet();
-    }
+    if(user.address) handleConnectWallet();
   });
 
   return user.address ? (
@@ -81,11 +79,11 @@ export default function Home() {
     <main className="container">
       <section>
           <div className="field my-5"> 
-            <label className=" lable">Create a poll for your community (Require 20 COM)</label>
-            <div className=" controle mt-2">
+            <label className="lable">Create a poll for your community (Require 20 COM)</label>
+            <div className="controle mt-2">
               <input onChange={updateDescription} className="input" type=" type" placeholder=" Enter description..." />
             </div>
-            <button onClick={handleSumbitProposal} className="button is-primary mt-2" >Create</button>
+            <button onClick={handleSumbitProposal} className="button is-info mt-2" >Create</button>
           </div>
       </section>
       

@@ -62,24 +62,28 @@ export default function Home() {
 
   return user.address ? (
     <>
-    <NavBar />
-    <main className="container">
-      <section>
-        <div className=" field my-5">
-          <label className=" lable">Enter your amoutn of KLAY you want to deposit (0.1 KLAY = 1000 COM)</label>
-          <div className=" controle mt-2">
-            <input onChange={updateAmountDeposit} className=" input" type=" type" placeholder=" Enter a number..."/>
+      <NavBar />
+      <main className="container">
+        <section className="my-5">
+            <p>Your balance: {user.balance} COM (Community Token)</p>
+        </section>
+
+        <section>
+          <div className=" field my-5">
+            <label className=" lable">Enter your amoutn of KLAY you want to deposit (0.1 KLAY = 1000 COM)</label>
+            <div className=" controle mt-2">
+              <input onChange={updateAmountDeposit} className=" input" type=" type" placeholder=" Enter a number..."/>
+            </div>
+            <button onClick={handleDeposit} className=" button is-info mt-2">Deposit</button>
           </div>
-          <button onClick={handleDeposit} className=" button is-primary mt-2">Deposit</button>
-        </div>
-      </section>
-      
-      <section>
-        <div className="has-text-danger">
-          <p>{errorMessage}</p>
-        </div>
-      </section>
-    </main>
+        </section>
+        
+        <section>
+          <div className="has-text-danger">
+            <p>{errorMessage}</p>
+          </div>
+        </section>
+      </main>
     </>
   ) : (
     <>

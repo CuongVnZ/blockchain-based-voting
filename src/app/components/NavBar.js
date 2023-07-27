@@ -45,35 +45,30 @@ export default function NavBar() {
 
   return (
     <>
-    <nav className="navbar">
+    <nav className="navbar is-light">
       <div className="container">
       <div className="navbar-brand">
         <div className="navbar-item">
-          <h1>Blockchain-Based Voting</h1>
+          <p className="is-size-5 has-text-weight-semibold">BLOCKCHAIN VOTING</p>
         </div>
       </div>
 
       <div className="navbar-menu" id="nav-links">
         <div className="navbar-start">
           <Link href="/" className="navbar-item">Home</Link>
-          <Link href="/create" className="navbar-item">Create Poll</Link>
+          <Link href="/create" className="navbar-item">Create</Link>
           <Link href="/deposit" className="navbar-item">Deposit</Link>
         </div>
 
         <div className="navbar-end">
           <div className="navbar-item">
-            {!user.address && (<button className="button is-primary" onClick={handleConnectWallet}>Connect Wallet</button>)}
+            {!user.address && (<button className="button is-link" onClick={handleConnectWallet}>Connect Wallet</button>)}
             {user.address && (<p>{user.address}</p>)}
           </div>
         </div>
       </div>
       </div>
     </nav>
-    <section className="container">
-      <div className="mt-2">
-        <p>Your balance: {user.balance} COM (Community Token)</p>
-      </div>
-    </section>
     </>
   )
 }

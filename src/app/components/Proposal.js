@@ -34,41 +34,59 @@ const Proposal = ({ id, votingContract, address, web3 }) => {
     });
   }
 
+  function isEnded() {
+    return proposalInfo.timestamp < Math.floor(new Date().getTime() / 1000);
+  }
+
+  function getDate() {
+    return new Date(Number(proposalInfo.timestamp)*1000).toLocaleDateString();
+  }
+
   return (
     <>
       {proposalInfo && (
         <div className="column is-3">
           <div className="card ">
-            <header className="card-header">
-              <p className="card-header-title">{id + 1}: {
-                Number(resultProposal)==1 ? "Proposal accepted" : Number(resultProposal)==2 ?"Proposal denied":"In voting" 
-              }</p>
+            <header className="card-header has-background-light">
+              <p className="card-header-title">{id + 1}. {getDate()}</p>
             </header>
             <div className="card-content">
               <div className="content">
                 <p>{proposalInfo.description}</p>
-                <br />
-                <p>{new Date(Number(proposalInfo.timestamp)*1000).toLocaleDateString()}</p>
-              </div>
-            </div>
-            <footer className="card-footer">
-              {proposalInfo.timestamp > Math.floor(new Date().getTime() / 1000) ? (
+                <hr />
+                <div className="is-flex-direction-row is-justify-content-space-between">
+                {!isEnded() ? (
                 <>
-                  <button onClick={() => handleVote(true)} className="card-footer-item button is-primary mt-3 mr-5" >
+                  <button onClick={() => handleVote(true)} className="button is-success">
                     Agree: {Number(proposalInfo.yesCount)}
                   </button>
-                  <button onClick={() => handleVote(false)} className="card-footer-item button is-primary mt-3">
-                    Disagree: {Number(web3.utils.fromWei(proposalInfo.noCount, "ether"))}
+                  <button onClick={() => handleVote(false)} className="button is-danger">
+                    Disagree: {Number(proposalInfo.noCount)}
                   </button>
                 </>
+                ) : (
+                  <button onClick={handleFinalize} className="button is-info" disabled={isEnded()}>
+                    Finialize
+                  </button>
+                )}
+                </div>
+              </div>
+            </div>
+            {isEnded() ? (
+              resultProposal == 1 ? (
+                <footer className="card-footer has-background-success-light">
+                  <p className="card-footer-item has-text-success"> Proposal accepted </p>
+                </footer>
               ) : (
-                <>
-                  <button disabled={resultProposal!=0 ? true : false} onClick={handleFinalize} className="card-footer-item button is-primary">
-                    Finallize
-                  </button>
-                </>
-              )}
-            </footer>
+                <footer className="card-footer has-background-danger-light">
+                  <p className="card-footer-item has-text-danger"> Proposal denied </p>
+                </footer>
+              )
+            ) : (
+              <footer className="card-footer has-background-warning-light">
+                <p className="card-footer-item"> In progressing </p>
+              </footer>
+            )}
           </div>
         </div>
       )}

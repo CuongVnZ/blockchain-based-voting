@@ -3,16 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     tokenContract: null,
     votingContract: null,
-    instance: null,
 }
 
 const web3Slice = createSlice({
     name: 'web3',
     initialState,
     reducers: {
-        setInstance: (state, action) => {
-            state.instance = action.payload
-        },
         setTokenContract: (state, action) => {
             state.tokenContract = action.payload
         },

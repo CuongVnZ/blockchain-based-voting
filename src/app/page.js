@@ -17,7 +17,7 @@ export default function Home() {
   const [votingContract, setVotingContract] = useState(null);
 
   const [errorMessage, setErrorMessage] = useState(null);
-  const [countProposal, setCount] = useState(null);
+  const [countProposal, setCount] = useState(0);
 
   const user = useSelector(state=>state.user)
 
@@ -45,50 +45,47 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {
-    async function fetchData() {
-      if(user.address && !web3) {
-        handleConnectWallet();
-      }
-
-      if (votingContract) {
-        const proposalCount = await votingContract.methods.proposalCount().call();
-        console.log( "🚀 ~ file: index.js:116 ~ fetchData ~ proposalCount:", proposalCount);
-        setCount(Number(proposalCount));
-      }
+  async function fetchData() {
+    if(user.address && !web3) {
+      handleConnectWallet();
     }
 
-    const interval = setInterval(() => {
-      fetchData();
-    }, 2000);
+    if (votingContract) {
+      const proposalCount = await votingContract.methods.proposalCount().call();
+      console.log( "🚀 ~ file: index.js:116 ~ fetchData ~ proposalCount:", proposalCount);
+      setCount(Number(proposalCount));
+    }
+  }
 
-    return () => clearInterval(interval);
+  useEffect(() => {
+    fetchData();
+
+    // const interval = setInterval(() => {
+    //   fetchData();
+    // }, 2000);
+
+    // return () => clearInterval(interval);
   });
 
   return user.address ? (
     <>
     <NavBar />
-
     <main className="container">
-      <section>
-        <div className="my-5">
-          <div className="field">
-            <label>List Proposal: {countProposal}</label>
-            <div className="columns is-multiline">
-              {countProposal > 0 &&
-                Array.from({ length: countProposal }, (_, index) => {
-                  return (
-                    <Proposal
-                      votingContract={votingContract}
-                      address={address}
-                      id={index}
-                      key={index}
-                      web3={web3}
-                    ></Proposal>
-                  );
-                })}
-            </div>
-          </div>
+      <section className="my-5">
+        <p className="my-5 is-size-1 has-text-centered">VOTING LIST ({countProposal})</p>
+        <div className="columns is-multiline">
+          {countProposal > 0 &&
+            Array.from({ length: countProposal }, (_, index) => {
+              return (
+                <Proposal
+                  votingContract={votingContract}
+                  address={address}
+                  id={index}
+                  key={index}
+                  web3={web3}
+                />
+              );
+            })}
         </div>
       </section>
 
