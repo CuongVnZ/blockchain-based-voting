@@ -79,7 +79,7 @@ export default function Home() {
     <main className="container">
       <section>
           <div className="field my-5"> 
-            <label className="lable">Create a poll for your community (Require 20 COM)</label>
+            <label className="lable">Create a poll for your community (Require 50 COM)</label>
             <div className="controle mt-2">
               <input onChange={updateDescription} className="input" type=" type" placeholder=" Enter description..." />
             </div>
