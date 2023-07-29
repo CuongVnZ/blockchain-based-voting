@@ -53,8 +53,8 @@ export default function Home() {
   const handleSumbitProposal = async () => {
     try {
       const allowance = await tokenContract.methods.allowance(address, votingContract._address).call();
-      if (Number(web3.utils.fromWei(allowance, "ether")) < 20) {
-        await tokenContract.methods.approve(votingContract._address, BigInt(20 * 10 ** 18)).send({
+      if (Number(web3.utils.fromWei(allowance, "ether")) < 50) {
+        await tokenContract.methods.approve(votingContract._address, BigInt(50 * 10 ** 18)).send({
           from: address,
         });
       }
