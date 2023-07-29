@@ -73,7 +73,7 @@ const Proposal = ({ id, votingContract, address, web3 }) => {
                 </>
                 ) : (
                   <button onClick={handleFinalize} className="button is-info" disabled={resultProposal != 0}>
-                    Finialize
+                    Finalize
                   </button>
                 )}
                 </div>
